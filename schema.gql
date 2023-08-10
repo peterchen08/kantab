@@ -9,7 +9,6 @@ scalar JSONObject @specifiedBy(url: "http://www.ecma-international.org/publicati
 scalar Long
 
 type Query {
-  supportedSocialAuthProviders: [String]
   me: Profile
 
   """Find all Boards"""
@@ -47,6 +46,7 @@ type Query {
 
   """Get a Card by ID"""
   cardById(id: String!, fields: [String], scopes: [String]): Card
+  supportedSocialAuthProviders: [String]
 }
 
 type Mutation {

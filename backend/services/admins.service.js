@@ -775,7 +775,7 @@ module.exports = {
 					{
 						username: "superAdmin",
 						fullName: "Administrator",
-						mobile: "13718459286",
+						mobile: "13800000001",
 						password: await this.hashPassword("admin"),
 						avatar: "https://user-images.githubusercontent.com/306521/112635269-e7511f00-8e3b-11eb-8a59-df6dda998d05.png",
 						roles: ["super_admin"]
@@ -784,7 +784,7 @@ module.exports = {
 					{
 						username: "admin",
 						fullName: "Administrator",
-						mobile: "13718459287",
+						mobile: "13800000002",
 						password: await this.hashPassword("admin"),
 						avatar: "https://user-images.githubusercontent.com/306521/112635269-e7511f00-8e3b-11eb-8a59-df6dda998d05.png",
 						roles: ["admin"]
@@ -794,7 +794,7 @@ module.exports = {
 					{
 						username: "agent",
 						fullName: "Agent User",
-						mobile: "13718459288",
+						mobile: "13800000003",
 						password: await this.hashPassword("agent"),
 						avatar: "https://user-images.githubusercontent.com/306521/112635366-03ed5700-8e3c-11eb-80a3-49804bf7e7c4.png",
 						roles: ["agent"]
@@ -803,7 +803,7 @@ module.exports = {
 				{ permissive: true }
 			);
 
-			this.logger.info(`成功创建了 ${res.length} 个账号.`);
+			this.logger.info(`成功创建了 ${res.length} 个后台管理账号.`);
 		}
 	}
 };

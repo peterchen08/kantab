@@ -1,15 +1,16 @@
 {
-  "name": "mykanta",
+  "name": "kanta",
   "version": "1.0.0",
   "description": "My Moleculer-based microservices project",
   "scripts": {
     "build:admin": "cd admin && npm run build",
     "build:frontend": "cd frontend && npm run build",
-    "dev": "moleculer-runner --envfile .env.dev --repl --hot backend/services/**/*.service.js",
+    "dev": "moleculer-runner --envfile .env --repl --hot backend/services/**/*.service.js",
     "start": "moleculer-runner --env",
     "cli": "moleculer connect NATS",
     "ci": "jest --watch",
     "test": "jest --coverage",
+    "dc:env":"docker-compose -f docker-compose-dev.yml up -d",
     "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
     "dc:down": "docker-compose down"

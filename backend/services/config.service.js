@@ -99,7 +99,6 @@ module.exports = {
 				key: [{ type: "string" }, { type: "array", items: "string" }]
 			},
 			async handler(ctx) {
-				this.logger.error("-----------config.get-----------");
 				return await this.get(ctx.params.key);
 			}
 		},
@@ -165,7 +164,6 @@ module.exports = {
 			cache: false,
 			visibility: "protected",
 			handler(ctx) {
-				this.logger.error("-----------config.all-----------");
 				return this.findEntities(ctx, {});
 			}
 		},

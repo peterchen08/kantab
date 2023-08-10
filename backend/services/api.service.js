@@ -70,7 +70,7 @@ module.exports = {
 						// 'block-all-mixed-content',
 						//'font-src': ["'self'"],
 						//'frame-ancestors': ["'self'"],
-						//'img-src': ["'self'", 'data:'],
+						'img-src': ["'self'", 'data:'],
 						//'object-src': ["'none'"],
 						'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
 						//'script-src-attr': ["'none'"],
