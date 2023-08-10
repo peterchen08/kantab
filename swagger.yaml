@@ -1,0 +1,492 @@
+openapi: 3.0.1
+info:
+  title: mykanta API Documentation
+  description: Moleculer JS Microservice Boilerplate with Typescript, TypeORM, CLI, Service Clients, Swagger, Jest, Docker, Eslint support and everything you will ever need to deploy rock solid projects..
+  version: 1.0.0
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /api/v1/accounts/register:
+    post:
+      tags:
+        - Accounts
+      summary: 创建一个用户
+      description: 创建一个用户
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - fullName
+                - username
+                - password
+                - email
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  description: 全名
+                username:
+                  type: string
+                  description: 登录用户名
+                password:
+                  type: string
+                  description: 登录密码
+                email:
+                  type: string
+                  description: 邮箱
+                avatar:
+                  type: string
+                  description: 头像
+        required: false
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '400':
+          description: 参数错误
+          content: {}
+      x-codegen-request-body-name: params
+  /api/v1/accounts/login:
+    post:
+      tags:
+        - Accounts
+      summary: 用户登录
+      description: 用户 登录
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 登录email或用户名
+                password:
+                  type: string
+                  description: 登录密码
+        required: false
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '422':
+          description: 缺失参数
+          content: {}
+      x-codegen-request-body-name: params
+  /api/v1/accounts/userlist:
+    get:
+      tags:
+        - Accounts
+      summary: 用户列表
+      description: 后台账户列表,手动实现v1.accounts.list相同功能
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '401':
+          description: 无操作权限
+          content: {}
+  /admins/register:
+    post:
+      tags:
+        - Admin
+      summary: 创建一个管理员
+      description: 创建一个管理员
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - username
+                - password
+                - mobile
+                - roles
+                - avatar
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: 后台登录用户名
+                  default: guest
+                password:
+                  type: string
+                  description: 后台登录密码
+                  default: 123456
+                mobile:
+                  type: string
+                  description: 手机号
+                  default: null
+                roles:
+                  type: array
+                  items:
+                    type: string
+                  description: 角色权限
+                  default:
+                    - guest
+                avatar:
+                  type: string
+                  description: 头像
+                  default: null
+        required: false
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '400':
+          description: 参数错误
+          content: {}
+      x-codegen-request-body-name: params
+  /admins/auth:
+    post:
+      tags:
+        - Admin
+      summary: 后台管理员登录
+      description: 后台管理员登录
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - username
+                - password
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: 后台登录用户名
+                password:
+                  type: string
+                  description: 后台登录密码
+        required: false
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '422':
+          description: 缺失参数
+          content: {}
+      x-codegen-request-body-name: params
+  /admins/disable:
+    get:
+      tags:
+        - Admin
+      summary: 禁用一个后台账户
+      description: 禁用一个后台账户
+      parameters:
+        - name: id
+          in: query
+          description: 账号ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '400':
+          description: 账户已是启用状态
+          content: {}
+  /admins/list:
+    get:
+      tags:
+        - Admin
+      summary: DbService内置actions 测试
+      description: 混合选项actionVisibility为public的情况下,DbService混进来的actions及同名自定义action例如 list find update等都将无法被api网关对外发布
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '404':
+          description: 404 Service 'v1.admins.list' is not found
+          content: {}
+  /admins/adminlist:
+    get:
+      tags:
+        - Admin
+      summary: 后台账户列表
+      description: 后台账户列表,手动实现v1.admins.list相同功能
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '401':
+          description: 无操作权限
+          content: {}
+  /admins/enable:
+    get:
+      tags:
+        - Admin
+      summary: 启用一个后台账户
+      description: 启用一个后台账户
+      parameters:
+        - name: id
+          in: query
+          description: 账号ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '400':
+          description: 账户已是启用状态
+          content: {}
+  /admins/getAdminInfo:
+    get:
+      tags:
+        - Admin
+      summary: 获取管理员账号信息
+      description: 获取管理员账号信息
+      parameters:
+        - name: id
+          in: query
+          description: 账号ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '422':
+          description: 缺少参数
+          content: {}
+  /admins/me:
+    get:
+      tags:
+        - Admin
+      summary: 获取当前账号信息
+      description: 获取当前账号信息
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '422':
+          description: 缺失参数
+          content: {}
+    put:
+      tags:
+        - Admin
+      summary: 更新当前账号信息
+      description: 更新当前账号信息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                admin:
+                  type: object
+                  properties:
+                    avatar:
+                      type: string
+                      description: 头像地址
+                    roles:
+                      type: array
+                      items:
+                        type: string
+                        description: 账号权限
+                        default: guest
+        required: false
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '422':
+          description: 缺失参数
+          content: {}
+      x-codegen-request-body-name: params
+  /api/v1/boards:
+    post:
+      tags:
+        - Boards
+      summary: 创建看板
+      description: 创建看板
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - title
+                - description
+                - public
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 看板名称
+                description:
+                  type: string
+                  description: 看板描述
+                public:
+                  type: boolean
+                  description: 是否公开
+                  default: false
+        required: false
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '400':
+          description: 参数错误
+          content: {}
+      x-codegen-request-body-name: params
+    get:
+      tags:
+        - Boards
+      summary: 看板列表
+      description: 看板列表
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '401':
+          description: 无操作权限
+          content: {}
+  /api/v1/boards/{id}:
+    get:
+      tags:
+        - Boards
+      summary: 根据ID查看某个面板
+      description: 根据ID查看某个board,注意defaultScopes带来的影响,看板的成员才可以查看
+      parameters:
+        - name: id
+          in: path
+          description: 账号ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '401':
+          description: 无操作权限
+          content: {}
+  /greeter/hello:
+    get:
+      tags:
+        - Greeter
+      summary: say hello
+      description: say hello
+      responses:
+        '200':
+          description: welcome result
+          content: {}
+        '422':
+          description: Missing parameters
+          content: {}
+      x-codegen-request-body-name: params
+  /greeter/welcome:
+    post:
+      tags:
+        - Greeter
+      summary: Welcome a username
+      description: Welcome a username
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name to be used
+                  default: John
+        required: false
+      responses:
+        '200':
+          description: welcome result
+          content: {}
+        '422':
+          description: Missing parameters
+          content: {}
+      x-codegen-request-body-name: params
+  /api/v1/boards/{board}/lists:
+    post:
+      tags:
+        - Lists
+      summary: 创建条目
+      description: 创建条目
+      parameters:
+        - name: board
+          in: path
+          description: 看板ID
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - title
+                - description
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 条目名称
+                description:
+                  type: string
+                  description: 条目描述
+        required: false
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '400':
+          description: 参数错误
+          content: {}
+      x-codegen-request-body-name: params
+    get:
+      tags:
+        - Lists
+      summary: 看板下所有条目
+      description: 看板下所有条目
+      parameters:
+        - name: board
+          in: path
+          description: 看板ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '401':
+          description: 无操作权限
+          content: {}
+  /api/v1/boards/{board}/lists/{id}:
+    get:
+      tags:
+        - Lists
+      summary: 根据看板ID、条目ID查看某个条目
+      description: 根据看板ID、条目ID查看某个条目
+      parameters:
+        - name: board
+          in: path
+          description: 看板ID
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: 条目ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求成功
+          content: {}
+        '401':
+          description: 无操作权限
+          content: {}
+tags: []

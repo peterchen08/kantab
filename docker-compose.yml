@@ -1,0 +1,257 @@
+version: "3.3"
+services:
+  api:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: api.service.js
+      PORT: 3000
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-gw.rule=PathPrefix(`/`)"
+      - "traefik.http.services.api-gw.loadbalancer.server.port=3000"
+    networks:
+      - internal
+
+  v1_admins:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: admins.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+
+  v1_accounts:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: accounts.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_activities:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: activities.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_boards:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: boards.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_card_attachments:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: card.attachments.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_card_checklists:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: card.checklists.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_cards:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: cards.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_config:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: config.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  laboratory:
+    build:
+      context: .
+    expose:
+      - 3210
+    ports:
+      - '3210:3210'
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: laboratory.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_lists:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: lists.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_mail:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: mail.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  v1_tokens:
+    build:
+      context: .
+    image: cxlkantab
+    env_file:
+      - docker-compose.env
+      - .env
+    environment:
+      SERVICES: tokens.service.js
+    depends_on:
+      - mongo
+      - nats
+      - redis
+    networks:
+      - internal
+    
+  
+  mongo:
+    image: mongo:4
+    volumes:
+      - data:/data/db
+    networks:
+      - internal
+
+  nats:
+    image: nats:2
+    networks:
+      - internal
+
+  redis:
+    image: redis:alpine
+    networks:
+      - internal
+
+  traefik:
+    image: traefik:v2.4
+    command:
+      - "--api.insecure=true" # Don't do that in production!
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+    ports:
+      - 3000:80
+      - 3001:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - internal
+      - default
+
+networks:
+  internal:
+
+volumes:
+  data:

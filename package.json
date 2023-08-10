@@ -1,0 +1,90 @@
+{
+  "name": "mykanta",
+  "version": "1.0.0",
+  "description": "My Moleculer-based microservices project",
+  "scripts": {
+    "build:admin": "cd admin && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "dev": "moleculer-runner --envfile .env.dev --repl --hot backend/services/**/*.service.js",
+    "start": "moleculer-runner --env",
+    "cli": "moleculer connect NATS",
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "dc:up": "docker-compose up --build -d",
+    "dc:logs": "docker-compose logs -f",
+    "dc:down": "docker-compose down"
+  },
+  "keywords": [
+    "microservices",
+    "moleculer"
+  ],
+  "author": "",
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "jest-cli": "^27.5.1",
+    "moleculer-repl": "^0.7.3"
+  },
+  "dependencies": {
+    "@moleculer/database": "^0.1.1",
+    "@moleculer/lab": "^0.6.4",
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "connect-history-api-fallback": "^2.0.0",
+    "cookie": "^0.5.0",
+    "cron": "^2.3.1",
+    "cross-env": "^7.0.3",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "dotenv-flow": "^3.2.0",
+    "fastest-validator": "^1.15.0",
+    "fs": "^0.0.1-security",
+    "graphql": "15.8.0",
+    "graphql-date": "^1.0.3",
+    "graphql-depth-limit": "^1.1.0",
+    "graphql-type-json": "^0.3.2",
+    "graphql-type-long": "^0.1.1",
+    "graphql-validation-complexity": "^0.4.2",
+    "hashids": "^2.3.0",
+    "helmet": "^7.0.0",
+    "ioredis": "^4.27.9",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mkdirp": "^3.0.1",
+    "moleculer": "0.14.21",
+    "moleculer-apollo-server": "github:moleculerjs/moleculer-apollo-server#7f0e2e2e2cb8c3118aa19385025578b2e5d7526f",
+    "moleculer-db": "^0.8.15",
+    "moleculer-db-adapter-mongo": "^0.4.13",
+    "moleculer-io": "^2.2.0",
+    "moleculer-mail": "^2.0.0",
+    "moleculer-web": "^0.10.2",
+    "mongodb": "^4.0.0",
+    "nats": "^2.2.0",
+    "os": "^0.1.2",
+    "passport": "^0.6.0",
+    "path": "^0.12.7",
+    "pluralize": "^8.0.0",
+    "prom-client": "^14.2.0",
+    "replace-in-file": "^7.0.1",
+    "slugify": "^1.6.6",
+    "speakeasy": "^2.0.0",
+    "swagger-editor-dist": "^4.4.0",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-stats": "^0.99.6",
+    "swagger-ui-dist": "^4.13.2",
+    "types": "^0.1.1",
+    "util": "^0.12.5",
+    "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">= 16.x.x"
+  },
+  "jest": {
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "rootDir": "backend/services",
+    "roots": [
+      "../backend/test"
+    ]
+  }
+}

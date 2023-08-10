@@ -1,0 +1,287 @@
+scalar Date
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+"""The `Long` scalar type represents 52-bit integers"""
+scalar Long
+
+type Query {
+  supportedSocialAuthProviders: [String]
+  me: Profile
+
+  """Find all Boards"""
+  boardsAll(limit: Int, offset: Int, fields: [String], sort: [String], search: String, searchFields: [String], scope: [String], query: JSONObject): [Board]
+
+  """Number of Boards"""
+  boardsCount(search: String, searchFields: [String], scope: [String], query: JSONObject): Int!
+
+  """List boards (with pagination)"""
+  boards(page: Int, pageSize: Int, fields: [String], sort: [String], search: String, searchFields: [String], scope: [String], query: JSONObject): BoardListResponse
+
+  """Get a Board by ID"""
+  boardById(id: String!, fields: [String], scopes: [String]): Board
+
+  """Find all Lists"""
+  listsAll(board: String!, limit: Int, offset: Int, fields: [String], sort: [String], search: String, searchFields: [String], scope: [String], query: JSONObject): [List]
+
+  """Number of Lists"""
+  listsCount(board: String!, search: String, searchFields: [String], scope: [String], query: JSONObject): Int!
+
+  """List lists (with pagination)"""
+  lists(board: String!, page: Int, pageSize: Int, fields: [String], sort: [String], search: String, searchFields: [String], scope: [String], query: JSONObject): ListListResponse
+
+  """Get a List by ID"""
+  listById(id: String!, fields: [String], scopes: [String]): List
+
+  """Find all Cards"""
+  cardsAll(list: String!, limit: Int, offset: Int, fields: [String], sort: [String], search: String, searchFields: [String], scope: [String], query: JSONObject): [Card]
+
+  """Number of Cards"""
+  cardsCount(list: String!, search: String, searchFields: [String], scope: [String], query: JSONObject): Int!
+
+  """List cards (with pagination)"""
+  cards(list: String!, page: Int, pageSize: Int, fields: [String], sort: [String], search: String, searchFields: [String], scope: [String], query: JSONObject): CardListResponse
+
+  """Get a Card by ID"""
+  cardById(id: String!, fields: [String], scopes: [String]): Card
+}
+
+type Mutation {
+  register(username: String!, fullName: String!, email: String!, password: String, avatar: String): Profile!
+  login(email: String!, password: String, token: String): LoginResponse!
+  accountVerify(token: String!): LoginResponse!
+  passwordlessLogin(token: String!): LoginResponse!
+  forgotPassword(email: String!): Boolean!
+  resetPassword(token: String!, password: String!): LoginResponse!
+  accountLink(id: String, provider: String, profile: JSONObject): Profile!
+  accountUnlink(id: String, provider: String): Profile!
+  accountEnable2FA: Enable2FAResponse!
+  accountFinalize2FA(token: String): Boolean!
+  accountDisable2FA(token: String!): Boolean!
+
+  """Create a new Board"""
+  boardCreate(input: BoardCreateInput!): Board!
+
+  """Update an existing Board"""
+  boardUpdate(input: BoardUpdateInput!): Board!
+
+  """Delete an existing Board"""
+  boardRemove(id: String!): String!
+  boardAddMembers(id: String!, members: [String!]!): Board!
+  boardRemoveMembers(id: String!, members: [String!]!): Board!
+  boardTransferOwnership(id: String!, owner: String!): Board!
+  boardArchive(id: String!): Board!
+  boardUnarchive(id: String!): Board!
+
+  """Create a new List"""
+  listCreate(input: ListCreateInput!): List!
+
+  """Update an existing List"""
+  listUpdate(input: ListUpdateInput!): List!
+
+  """Delete an existing List"""
+  listRemove(id: String!): String!
+
+  """Create a new Card"""
+  cardCreate(input: CardCreateInput!): Card!
+
+  """Update an existing Card"""
+  cardUpdate(input: CardUpdateInput!): Card!
+
+  """Delete an existing Card"""
+  cardRemove(id: String!): String!
+}
+
+type LoginResponse {
+  token: String
+  passwordless: Boolean
+  email: String
+}
+
+type Enable2FAResponse {
+  otpauthURL: String!
+  secret: String!
+}
+
+type Member {
+  id: String!
+  username: String
+  fullName: String!
+  avatar: String
+}
+
+type ProfileSocialLink {
+  github: String
+  google: String
+  facebook: String
+}
+
+type ProfileTotp {
+  enabled: Boolean
+}
+
+type Profile {
+  id: String!
+  username: String
+  fullName: String!
+  email: String!
+  passwordless: Boolean
+  avatar: String
+  roles: [String]
+  socialLinks: ProfileSocialLink
+  status: Int
+  plan: String
+  verified: Boolean
+  token: String
+  totp: ProfileTotp
+  createdAt: Long
+  updatedAt: Long
+  lastLoginAt: Long
+}
+
+type BoardLabel {
+  id: Int
+  name: String!
+  color: String!
+}
+
+type Board {
+  id: String!
+  owner: Member
+  title: String!
+  slug: String
+  description: String
+  position: Int
+  public: Boolean
+  labels: [BoardLabel]
+  members: [Member]
+  lists(page: Int, pageSize: Int, sort: String): ListListResponse
+  archived: Boolean
+  archivedAt: Long
+  createdAt: Long
+  updatedAt: Long
+}
+
+type BoardListResponse {
+  total: Int!
+  page: Int!
+  pageSize: Int!
+  totalPages: Int!
+  rows: [Board]!
+}
+
+input CreateBoardLabelInput {
+  id: Int
+  name: String!
+  color: String!
+}
+
+input BoardCreateInput {
+  title: String!
+  description: String
+  position: Int
+  public: Boolean
+  labels: [CreateBoardLabelInput]
+}
+
+input UpdateBoardLabelInput {
+  id: Int
+  name: String
+  color: String
+}
+
+input BoardUpdateInput {
+  id: String!
+  title: String
+  description: String
+  position: Int
+  public: Boolean
+  labels: [UpdateBoardLabelInput]
+}
+
+type List {
+  id: String!
+  board: Board!
+  title: String!
+  description: String
+  color: String
+  position: Float
+  cards(page: Int, pageSize: Int, sort: String): CardListResponse
+  createdAt: Long
+  updatedAt: Long
+}
+
+type ListListResponse {
+  total: Int!
+  page: Int!
+  pageSize: Int!
+  totalPages: Int!
+  rows: [List]!
+}
+
+input ListCreateInput {
+  board: String!
+  title: String!
+  description: String
+  color: String
+  position: Float
+}
+
+input ListUpdateInput {
+  id: String!
+  board: String
+  title: String
+  description: String
+  color: String
+  position: Float
+}
+
+type Card {
+  id: String!
+  board: Board
+  list: List!
+  title: String!
+  description: String
+  color: String
+  position: Float
+  labels: [Int]
+  members: [Member]
+  archived: Boolean
+  archivedAt: Long
+  createdAt: Long
+  updatedAt: Long
+}
+
+type CardListResponse {
+  total: Int!
+  page: Int!
+  pageSize: Int!
+  totalPages: Int!
+  rows: [Card]!
+}
+
+input CardCreateInput {
+  board: String
+  list: String!
+  title: String!
+  description: String
+  color: String
+  position: Float
+  labels: [Int]
+  members: String
+}
+
+input CardUpdateInput {
+  id: String!
+  board: String
+  list: String
+  title: String
+  description: String
+  color: String
+  position: Float
+  labels: [Int]
+  members: String
+}

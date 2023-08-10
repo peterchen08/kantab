@@ -1,0 +1,28 @@
+{
+    "info": {
+        "title": "TestProject REST API 文档",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api",
+            "description": "Development server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "openapi": "3.0.3",
+    "paths": {},
+    "security": [
+        {
+            "BearerAuth": []
+        }
+    ],
+    "tags": []
+}
