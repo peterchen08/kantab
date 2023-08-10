@@ -2,12 +2,14 @@ const Laboratory = require("@moleculer/lab");
 
 /**
  * 官方监测面板
- * apikey需要到官网申请
+ * token和apikey需要到官网申请
+ * 详情:https://medium.com/moleculer/moleculers-laboratory-b3262cc3b39e
+ * 申请地址:https://docs.google.com/forms/d/e/1FAIpQLSdqRh7zTKDxm-0JvJoPlc7N3u2Buiet8Hpe7xqHPC_O_ifIIA/viewform?fbzx=-3878820790936324826
  */
 module.exports = {
     mixins: [Laboratory.AgentService],
     settings: {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-        apiKey: "54MP2N9-W2Z4M42-ME3DBW3-0GWQ0W8"
+        token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        apiKey: "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX"
     }
 };
