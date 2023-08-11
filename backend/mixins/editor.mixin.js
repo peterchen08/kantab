@@ -67,7 +67,7 @@ module.exports = (mixinOptions) => {
 							title: `${pkg.name} API Documentation`, // Title of the documentation
 							description:
 								// eslint-disable-next-line max-len
-								'Moleculer JS Microservice Boilerplate with Typescript, TypeORM, CLI, Service Clients, Swagger, Jest, Docker, Eslint support and everything you will ever need to deploy rock solid projects..', // Short description of the app
+								'基于icebob / kantab项目的看板应用,moleculer微服务架构,整合iview-admin后台管理,swagger接口文档、swagger-stats监控面板、moleculer_lab监控、REST API、GraphQL endpoint.', // Short description of the app
 							version: pkg.version, // Version of the app
 						},
 						servers: [
