@@ -1,6 +1,40 @@
 # kantab
 基于icebob / kantab项目的看板应用,moleculer微服务架构,整合iview-admin后台管理,swagger接口文档、swagger-stats监控面板、moleculer_lab监控、REST API、GraphQL endpoint
 
+## features
+
+- [x] iview-admin backstage managed
+- [x] Moleculer microservices backend
+- [x] VueJS frontend (VueX, Vue-router)
+- [x] MongoDB
+- [x] Redis cache
+- [x] NATS
+- [x] Central configuration
+- [x] Global REST API
+- [x] Swagger API docs
+- [x] Swagger stats
+- [x] Swagger editor
+- [x] GraphQL endpoint
+- [x] Full authentication
+    - [x] Login
+    - [x] Sign Up
+    - [x] Passwordless account
+    - [x] Forgot password
+    - [x] Reset password    
+    - [x] Account verification
+    - [x] Social login
+        - [x] Google
+        - [x] Facebook
+        - [x] Github
+    - [x] Two-factor authentication
+- [x] ACL/RBAC (user roles & permissions)
+- [x] I18N
+- [x] Websocket
+- [x] Metrics & monitoring
+- [x] Unit test with Jest, Cypress
+- [x] Unit test with Cypress
+- [x] Docker files
+
 ## Install
 建议使用yarn安装依赖,使用npm install 可能会有依赖库版本冲突,导致安装失败
 ```
@@ -54,42 +88,8 @@ Moleculer’s Laboratory 是官方推出的Moleculer 监控面板,请自行申�
 
 更多信息请参考[https://medium.com/moleculer/moleculers-laboratory-b3262cc3b39e](https://medium.com/moleculer/moleculers-laboratory-b3262cc3b39e)
 
-在[https://lab.moleculer.services/project/aHR0cDovL2xvY2FsaG9zdDozMjEw](https://lab.moleculer.services/project/aHR0cDovL2xvY2FsaG9zdDozMjEw)中输入申请token即可
+在[https://lab.moleculer.services/project/aHR0cDovL2xvY2FsaG9zdDozMjEw](https://lab.moleculer.services/project/aHR0cDovL2xvY2FsaG9zdDozMjEw)中输入申请到的token即可
 
 <img width="1373" alt="image" src="https://github.com/peterchen08/kantab/assets/5748835/c89f9dc5-570b-4827-b12a-35cad18dcec3">
 <img width="1366" alt="image" src="https://github.com/peterchen08/kantab/assets/5748835/ebb9d1fd-921f-429b-9ca2-7ea9a73adb8e">
 
-## Tech stack
-Desired features & modules:
-
-- [x] iview-admin backstage managed
-- [x] Moleculer microservices backend
-- [x] VueJS frontend (VueX, Vue-router)
-- [x] MongoDB
-- [x] Redis cache
-- [x] NATS
-- [x] Central configuration
-- [x] Global REST API
-- [x] Swagger API docs
-- [x] Swagger stats
-- [x] Swagger editor
-- [x] GraphQL endpoint
-- [x] Full authentication
-    - [x] Login
-    - [x] Sign Up
-    - [x] Passwordless account
-    - [x] Forgot password
-    - [x] Reset password    
-    - [x] Account verification
-    - [x] Social login
-        - [x] Google
-        - [x] Facebook
-        - [x] Github
-    - [x] Two-factor authentication
-- [x] ACL/RBAC (user roles & permissions)
-- [x] I18N
-- [x] Websocket
-- [x] Metrics & monitoring
-- [x] Unit test with Jest, Cypress
-- [x] Unit test with Cypress
-- [x] Docker files
