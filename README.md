@@ -38,6 +38,8 @@
 ## Install
 建议使用yarn安装依赖,使用npm install 可能会有依赖库版本冲突,导致安装失败
 ```
+git clone https://github.com/peterchen08/kantab.git
+cd kantab
 yarn
 ```
 docker安装redis、mongodb、nats运行环境
