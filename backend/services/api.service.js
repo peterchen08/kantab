@@ -326,6 +326,14 @@ module.exports = {
 		 * @returns {Promise}
 		 */
 		async authenticate(ctx, route, req) {
+			console.log(req.$action.name);
+			/**
+			 * 执行登录操作无需进行身份认证,直接排除
+			 */
+			if(req.$action.name.indexOf("login")){
+				return null;
+			}
+			
 			let token;
 
 			// 从请求的头文件中读取token,不能直接使用req.headers.authorization其将返回undefined
@@ -343,11 +351,14 @@ module.exports = {
 
 			let entity;
 			let decoded;
+			this.logger.error("-------token 000--------");
+			this.logger.error(token);
 			if (token) {
 				// 解析token
 				decoded = await this.verifyJWT(token);
 				if (decoded.type == C.TOKEN_TYPE_ADMIN_VERIFICATION) {
 					// 如果token的类型是后台管理账号,则
+					this.logger.error("-------token admin--------");
 					entity = await ctx.call("v1.admins.resolveAdmin", { id: decoded.id });
 					if (entity) {
 						this.logger.info("通过JWT验证:", entity.username);
@@ -361,6 +372,7 @@ module.exports = {
 					}
 				} else if(decoded.type == C.TOKEN_TYPE_ACCOUNT_VERIFICATION){
 					// 如果token的类型是短信登录或一键登录类型
+					this.logger.error("-------token account--------");
 					const user = await ctx.call("v1.accounts.resolveToken", { token });
 					if (user) {
 						this.logger.debug("User authenticated via JWT.", {

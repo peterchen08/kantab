@@ -65,7 +65,6 @@ module.exports = function (opts = {}) {
 			// 填充初始数据
 			const count = await this.countEntities(null, {});
 			if (count == 0 && _.isFunction(this.seedDB)) {
-				this.logger.info(`Seed '${opts.collection}' collection...`);
 				await this.seedDB();
 			}
 		}

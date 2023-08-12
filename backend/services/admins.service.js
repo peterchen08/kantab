@@ -708,7 +708,7 @@ module.exports = {
 		checkAdmin(admin) {
 			if (!admin) {
 				throw new MoleculerClientError(
-					"该账号尚未注册.",
+					"该后台管理账号尚未注册.",
 					400,
 					"ACCOUNT_NOT_FOUND"
 				);

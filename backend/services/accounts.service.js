@@ -1439,7 +1439,7 @@ module.exports = {
 				{ permissive: true }
 			);
 
-			this.logger.info(`Generated ${res.length} users.`);
+			this.logger.info(`成功创建了 ${res.length} 个前端用户.`);
 		}
 	},
 
