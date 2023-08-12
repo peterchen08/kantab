@@ -331,6 +331,7 @@ module.exports = {
 			 * 执行登录操作无需进行身份认证,直接排除
 			 */
 			if(!!req.$action && req.$action.name.indexOf("login")>0){
+				this.logger.error('---------------REST API login--------- ');
 				return null;
 			}
 			if(!!req.body.query && req.body.query.toString().indexOf("login")>0){
