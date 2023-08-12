@@ -326,11 +326,15 @@ module.exports = {
 		 * @returns {Promise}
 		 */
 		async authenticate(ctx, route, req) {
-			console.log(req.$action.name);
+			this.logger.info("-------authenticate--------");
 			/**
 			 * 执行登录操作无需进行身份认证,直接排除
 			 */
-			if(req.$action.name.indexOf("login")){
+			if(!!req.$action && req.$action.name.indexOf("login")>0){
+				return null;
+			}
+			if(!!req.body.query && req.body.query.toString().indexOf("login")>0){
+				this.logger.error('---------------GraphQL login--------- ');
 				return null;
 			}
 			
@@ -351,14 +355,14 @@ module.exports = {
 
 			let entity;
 			let decoded;
-			this.logger.error("-------token 000--------");
-			this.logger.error(token);
+			
+			this.logger.info(token);
 			if (token) {
 				// 解析token
 				decoded = await this.verifyJWT(token);
 				if (decoded.type == C.TOKEN_TYPE_ADMIN_VERIFICATION) {
 					// 如果token的类型是后台管理账号,则
-					this.logger.error("-------token admin--------");
+					this.logger.info("-------token type: admin--------");
 					entity = await ctx.call("v1.admins.resolveAdmin", { id: decoded.id });
 					if (entity) {
 						this.logger.info("通过JWT验证:", entity.username);
@@ -371,8 +375,8 @@ module.exports = {
 						ctx.meta.roles = _.union(ctx.meta.roles, entity.roles);
 					}
 				} else if(decoded.type == C.TOKEN_TYPE_ACCOUNT_VERIFICATION){
-					// 如果token的类型是短信登录或一键登录类型
-					this.logger.error("-------token account--------");
+					// 如果token的类型是用户账号
+					this.logger.info("-------token type: account--------");
 					const user = await ctx.call("v1.accounts.resolveToken", { token });
 					if (user) {
 						this.logger.debug("User authenticated via JWT.", {

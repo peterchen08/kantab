@@ -10,7 +10,6 @@ scalar Long
 
 type Query {
   supportedSocialAuthProviders: [String]
-  me: Profile
 
   """Find all Boards"""
   boardsAll(limit: Int, offset: Int, fields: [String], sort: [String], search: String, searchFields: [String], scope: [String], query: JSONObject): [Board]
@@ -47,21 +46,10 @@ type Query {
 
   """Get a Card by ID"""
   cardById(id: String!, fields: [String], scopes: [String]): Card
+  me: Profile
 }
 
 type Mutation {
-  register(username: String!, fullName: String!, email: String!, password: String, avatar: String): Profile!
-  login(email: String!, password: String, token: String): LoginResponse!
-  accountVerify(token: String!): LoginResponse!
-  passwordlessLogin(token: String!): LoginResponse!
-  forgotPassword(email: String!): Boolean!
-  resetPassword(token: String!, password: String!): LoginResponse!
-  accountLink(id: String, provider: String, profile: JSONObject): Profile!
-  accountUnlink(id: String, provider: String): Profile!
-  accountEnable2FA: Enable2FAResponse!
-  accountFinalize2FA(token: String): Boolean!
-  accountDisable2FA(token: String!): Boolean!
-
   """Create a new Board"""
   boardCreate(input: BoardCreateInput!): Board!
 
@@ -93,53 +81,17 @@ type Mutation {
 
   """Delete an existing Card"""
   cardRemove(id: String!): String!
-}
-
-type LoginResponse {
-  token: String
-  passwordless: Boolean
-  email: String
-}
-
-type Enable2FAResponse {
-  otpauthURL: String!
-  secret: String!
-}
-
-type Member {
-  id: String!
-  username: String
-  fullName: String!
-  avatar: String
-}
-
-type ProfileSocialLink {
-  github: String
-  google: String
-  facebook: String
-}
-
-type ProfileTotp {
-  enabled: Boolean
-}
-
-type Profile {
-  id: String!
-  username: String
-  fullName: String!
-  email: String!
-  passwordless: Boolean
-  avatar: String
-  roles: [String]
-  socialLinks: ProfileSocialLink
-  status: Int
-  plan: String
-  verified: Boolean
-  token: String
-  totp: ProfileTotp
-  createdAt: Long
-  updatedAt: Long
-  lastLoginAt: Long
+  register(username: String!, fullName: String!, email: String!, password: String, avatar: String): Profile!
+  login(email: String!, password: String, token: String): LoginResponse!
+  accountVerify(token: String!): LoginResponse!
+  passwordlessLogin(token: String!): LoginResponse!
+  forgotPassword(email: String!): Boolean!
+  resetPassword(token: String!, password: String!): LoginResponse!
+  accountLink(id: String, provider: String, profile: JSONObject): Profile!
+  accountUnlink(id: String, provider: String): Profile!
+  accountEnable2FA: Enable2FAResponse!
+  accountFinalize2FA(token: String): Boolean!
+  accountDisable2FA(token: String!): Boolean!
 }
 
 type BoardLabel {
@@ -284,4 +236,51 @@ input CardUpdateInput {
   position: Float
   labels: [Int]
   members: String
+}
+
+type LoginResponse {
+  token: String
+  passwordless: Boolean
+  email: String
+}
+
+type Enable2FAResponse {
+  otpauthURL: String!
+  secret: String!
+}
+
+type Member {
+  id: String!
+  username: String
+  fullName: String!
+  avatar: String
+}
+
+type ProfileSocialLink {
+  github: String
+  google: String
+  facebook: String
+}
+
+type ProfileTotp {
+  enabled: Boolean
+}
+
+type Profile {
+  id: String!
+  username: String
+  fullName: String!
+  email: String!
+  passwordless: Boolean
+  avatar: String
+  roles: [String]
+  socialLinks: ProfileSocialLink
+  status: Int
+  plan: String
+  verified: Boolean
+  token: String
+  totp: ProfileTotp
+  createdAt: Long
+  updatedAt: Long
+  lastLoginAt: Long
 }
